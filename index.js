@@ -1,33 +1,44 @@
 import express from "express";
 import dotenv from "dotenv";
-import fs from "fs";
 
 // Cargar variables de entorno
-if (process.env.NODE_ENV !== 'production') {
-    dotenv.config();
-}
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Leer datos de estudiantes desde students.json
-const students = JSON.parse(fs.readFileSync("students.json", "utf-8"));
+// ✅ Datos de estudiantes en memoria
+const students = [
+  {
+    id: "1",
+    name: "Daniel",
+    lastName: "Sanabria",
+    email: "daniel.sanabria@universidad.edu",
+    id_universidad: "123456"
+  },
+  {
+    "id": "2",
+    "name": "Camilo",
+    "lastName": "Gutierrez",
+    "email": "camiloguba@unisabana.edu.co",
+    "universityId": "338758"
+  }
+];
 
+// ✅ Endpoint raíz con mensaje de bienvenida
 app.get("/", (req, res) => {
   res.send("Bienvenido a la API de Script Cardenal. Usa /user-info/:id para consultar estudiantes.");
 });
-
 
 // Endpoint dinámico
 app.get("/user-info/:id", (req, res) => {
   const { id } = req.params;
 
-  // Validar que el ID sea un número entero positivo
+  // Validar que el ID sea un número
   if (!/^\d+$/.test(id)) {
     return res.status(400).json({ error: "El ID debe ser un número válido" });
   }
 
-  // Buscar estudiante en el array
   const student = students.find((s) => s.id === id);
 
   if (!student) {
@@ -41,4 +52,5 @@ app.get("/user-info/:id", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
 
