@@ -4,8 +4,8 @@ export const students = [
     id: "1",
     name: "Daniel",
     lastName: "Sanabria",
-    email: "daniel.sanabria@universidad.edu",
-    id_universidad: "123456"
+    email: "danielsansol@unisabana.edu.co",
+    id_universidad: "340113"
   },
   {
     "id": "2",
